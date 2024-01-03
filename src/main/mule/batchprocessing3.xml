@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="295aa5ae-77dc-4f34-9741-14622bea404d" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="batchprocessing3Flow" doc:id="8dd12b03-f59a-476c-a14d-0ddc25ddf124" >
+		<http:listener doc:name="Listener" doc:id="5dcc703f-6474-4551-9bfb-019512fc2727" config-ref="HTTP_Listener_config" path="/batch3"/>
+		<set-payload value='#[[1,2,"a",4,5,"b","c"]]' doc:name='arrayList' doc:id="197b32b1-c951-4a60-99d3-d05502e61835" />
+		<batch:job jobName="batchprocessing3-Batch_Job" doc:id="76ee057a-2769-42aa-a720-af3b2b9e37fc" >
+			<batch:process-records >
+				<batch:step name="Batch_Step" doc:id="2985c7bc-3d08-480c-8870-f6fd419836cc" />
+			</batch:process-records>
+		</batch:job>
+	</flow>
+</mule>
