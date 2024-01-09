@@ -13,8 +13,16 @@ http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/ba
 		<set-payload value='#[[1,2,"a",4,5,"b","c"]]' doc:name='arrayList' doc:id="197b32b1-c951-4a60-99d3-d05502e61835" />
 		<batch:job jobName="batchprocessing3-Batch_Job" doc:id="76ee057a-2769-42aa-a720-af3b2b9e37fc" >
 			<batch:process-records >
-				<batch:step name="Batch_Step" doc:id="2985c7bc-3d08-480c-8870-f6fd419836cc" />
+				<batch:step name="Batch_Step" doc:id="2985c7bc-3d08-480c-8870-f6fd419836cc" >
+					<set-payload value="#[payload * 10]" doc:name="Set Payload" doc:id="2590123f-ddb9-45fb-90b1-4e9258b3a838" />
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="0dfa6128-f8c5-444e-a9ff-d5fc0e750c77" size="2">
+						<logger level="INFO" doc:name="Logger" doc:id="350b3ad8-c1b1-4b57-9773-260333869964" message='#["Batch step 1 values are ::::" ++ payload as String]'/>
+					</batch:aggregator>
+				</batch:step>
 			</batch:process-records>
+			<batch:on-complete >
+				<logger level="INFO" doc:name="Logger" doc:id="03143892-c027-47c9-bb40-4f8c199544e0" message="#[payload]"/>
+			</batch:on-complete>
 		</batch:job>
 	</flow>
 </mule>
